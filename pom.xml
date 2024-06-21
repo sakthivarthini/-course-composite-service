@@ -107,6 +107,7 @@
     
     <dependencyManagement>
         <dependencies>
+            <!-- Spring Cloud Dependencies -->
             <dependency>
                 <groupId>org.springframework.cloud</groupId>
                 <artifactId>spring-cloud-dependencies</artifactId>
@@ -114,10 +115,19 @@
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
+            <!-- Classgraph Dependency -->
             <dependency>
                 <groupId>io.github.classgraph</groupId>
                 <artifactId>classgraph</artifactId>
                 <version>4.8.139</version>
+            </dependency>
+            <!-- CycloneDX BOM -->
+            <dependency>
+                <groupId>org.cyclonedx</groupId>
+                <artifactId>cyclonedx-bom</artifactId>
+                <version>${cyclonedx.maven.plugin.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
             </dependency>
         </dependencies>
     </dependencyManagement>

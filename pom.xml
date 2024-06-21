@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0"
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0
+                             https://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 	<parent>
 		<groupId>org.springframework.boot</groupId>
@@ -123,28 +124,31 @@
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
 			</plugin>
-                           <plugin>
+                           
+                   <plugin>
                 <groupId>org.cyclonedx</groupId>
                 <artifactId>cyclonedx-maven-plugin</artifactId>
-                <version>${cyclonedx.maven.plugin.version}</version>
-                <configuration>
-                    <schemaVersion>1.5</schemaVersion>
-                    <includeBomSerialNumber>false</includeBomSerialNumber>
-                    <includeLicenseText>false</includeLicenseText>
-                    <destination>build/reports</destination>
-                    <outputFormat>xml</outputFormat>
-                    <outputName>bom</outputName>
-                    <componentVersion>2.0.0</componentVersion>
-                    <projectType>application</projectType>
-                </configuration>
+                <version>2.6.4</version> <!-- Adjust to the latest version -->
                 <executions>
                     <execution>
-                        <phase>verify</phase>
                         <goals>
                             <goal>makeAggregateBom</goal>
                         </goals>
                     </execution>
                 </executions>
+                <configuration>
+                    <includeBomSerialNumber>false</includeBomSerialNumber>
+                    <includeLicenseText>false</includeLicenseText>
+                    <schemaVersion>1.5</schemaVersion>
+                    <outputFormat>XML</outputFormat>
+                    <outputName>bom</outputName>
+                    <includeConfigs>
+                        <includeConfig>runtimeClasspath</includeConfig>
+                    </includeConfigs>
+                    <projectType>application</projectType>
+                    <componentVersion>2.0.0</componentVersion>
+                    <destination>${project.build.directory}/reports</destination>
+                </configuration>
             </plugin>
 		</plugins>
 	</build>

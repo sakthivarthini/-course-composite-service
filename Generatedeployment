@@ -1,0 +1,41 @@
+pipeline {
+    agent any
+
+    stages {
+        stage('GENERATE Deployment') {
+            steps {
+                script {
+                    def deploymentYamlContent = """
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: poojaimages
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: poojaimages
+  template:
+    metadata:
+      labels:
+        app: poojaimages
+    spec:
+      containers:
+        - name: composite-service
+          image: ${NEXUS_DOCKER_REPO}/Poojaimages:1.0.1 
+          ports:
+            - containerPort: 8086
+"""
+                    writeFile file: 'k0s-deployment.yaml', text: deploymentYamlContent
+                }
+            }
+        }
+    }
+
+    post {
+        success {
+            archiveArtifacts artifacts: 'k0s-deployment.yaml', onlyIfSuccessful: true
+            archiveArtifacts artifacts: 'service-deployment.yaml', allowEmptyArchive: true
+        }
+    }
+}

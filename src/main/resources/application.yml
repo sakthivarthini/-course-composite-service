@@ -1,7 +1,6 @@
-
 spring:
   application:
-    name: vote
+    name: course-composite
   cloud:
     config:
       failFast: true
@@ -13,6 +12,9 @@ spring:
       uri: ${spring.cloud.config.uri:http://localhost:8888}
       username: ${CONFIG_SERVER_USR}
       password: ${CONFIG_SERVER_PWD}
+
+  config:
+    import: configserver:${spring.cloud.config.uri:http://localhost:8888}
 
 server:
   port: 8989
@@ -29,3 +31,6 @@ spring:
     config:
       uri: http://localhost:9789
       enabled: false
+
+  config:
+    import: optional:configserver:http://localhost:9789

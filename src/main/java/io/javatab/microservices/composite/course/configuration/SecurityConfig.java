@@ -1,5 +1,6 @@
 package io.javatab.microservices.composite.course.configuration;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.reactive.EnableWebFluxSecurity;
@@ -7,7 +8,6 @@ import org.springframework.security.config.web.server.ServerHttpSecurity;
 import org.springframework.security.oauth2.jwt.NimbusReactiveJwtDecoder;
 import org.springframework.security.oauth2.jwt.ReactiveJwtDecoder;
 import org.springframework.security.web.server.SecurityWebFilterChain;
-import org.springframework.beans.factory.annotation.Value;
 
 import static org.springframework.http.HttpMethod.*;
 
@@ -20,13 +20,13 @@ public class SecurityConfig {
 
     @Bean
     public ReactiveJwtDecoder jwtDecoder() {
-        return NimbusReactiveJwtDecoder.withJwkSetUri(this.jwkSetUri).build();
+        return NimbusReactiveJwtDecoder.withJwkSetUri(jwkSetUri).build();
     }
 
     @Bean
-    SecurityWebFilterChain springSecurityFilterChain(ServerHttpSecurity http) {
+    public SecurityWebFilterChain securityWebFilterChain(ServerHttpSecurity http) {
         http
-                .authorizeExchange()
+            .authorizeExchange()
                 .pathMatchers("/openapi/**").permitAll()
                 .pathMatchers("/webjars/**").permitAll()
                 .pathMatchers("/actuator/**").permitAll()
@@ -35,7 +35,7 @@ public class SecurityConfig {
                 .pathMatchers(GET, "/course-composite/**").hasAuthority("SCOPE_course:read")
                 .anyExchange().authenticated()
                 .and()
-                .oauth2ResourceServer()
+            .oauth2ResourceServer()
                 .jwt();
         return http.build();
     }

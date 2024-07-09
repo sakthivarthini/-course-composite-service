@@ -15,7 +15,7 @@ spring:
     import: optional:configserver:${spring.cloud.config.uri:http://localhost:8888}
 
 server:
-  port: 9090
+  port: 9765
   logging:
     level:
       org.springframework: DEBUG

@@ -30,3 +30,9 @@ spring:
       uri: http://localhost:9789
       enabled: false
     import: optional:configserver:http://localhost:9789
+
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          jwk-set-uri: <your_jwk_set_uri_value_here>
